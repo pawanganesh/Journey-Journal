@@ -43,9 +43,18 @@ public class HomeActivity extends BaseActivity {
 
         fullname = findViewById(R.id.fullname);
         listView = findViewById(R.id.listview);
+        GetJournals();
+        new GetCurrentUser().execute();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        GetJournals();
+    }
+
+    public void GetJournals(){
         ArrayList<JournalInfo> list = new ArrayList<>();
-
-
         sharedPreferences = getSharedPreferences("JourneyJournal", Context.MODE_PRIVATE);
         String access_token = sharedPreferences.getString("access_token", "");
         OkHttpClient okHttpClient = new OkHttpClient();
@@ -102,7 +111,6 @@ public class HomeActivity extends BaseActivity {
                 }
             }
         });
-        new GetCurrentUser().execute();
     }
 
     public class GetCurrentUser extends AsyncTask<String, Void, String> {

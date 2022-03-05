@@ -71,13 +71,13 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:orientation="horizontal"
-                    android:padding="10dp">
+                    android:padding="20dp">
                     <Button
                         android:id="@+id/delete"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.5"
-
+                        android:layout_marginRight="10dp"
                         android:text="DELETE" />
 
                     <Button
@@ -85,6 +85,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.5"
+                        android:layout_marginLeft="10dp"
                         android:text="EDIT" />
                 </LinearLayout>
 

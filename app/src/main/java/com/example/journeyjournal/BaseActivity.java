@@ -1,9 +1,11 @@
 package com.example.journeyjournal;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -35,11 +37,22 @@ public class BaseActivity extends AppCompatActivity {
                 startActivity(new Intent(BaseActivity.this, MyAccountActivity.class));
                 break;
             case R.id.logout:
-                // remove access_token to logout
-                sharedPreferences.edit().clear().commit();
-                Intent intent = new Intent(BaseActivity.this, LoginActivity.class);
-                startActivity(intent);
-                finish();
+                AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+                dialog.setTitle("Logout");
+                dialog.setMessage("Are you sure?");
+                dialog.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        // remove access_token to logout
+                        sharedPreferences.edit().clear().commit();
+                        Intent intent = new Intent(BaseActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                });
+                dialog.setNegativeButton("NO", null);
+                dialog.setCancelable(false);
+                dialog.show();
                 break;
         }
         return super.onOptionsItemSelected(item);

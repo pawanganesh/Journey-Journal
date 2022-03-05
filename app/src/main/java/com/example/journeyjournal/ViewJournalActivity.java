@@ -1,12 +1,8 @@
 package com.example.journeyjournal;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,7 +17,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class ViewJournalActivity extends AppCompatActivity {
+public class ViewJournalActivity extends BaseActivity {
 
     TextView title, description, posted_on;
     int id;
@@ -50,6 +46,12 @@ public class ViewJournalActivity extends AppCompatActivity {
 
         new GetJournal().execute();
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        new GetJournal().execute();
     }
 
     public class GetJournal extends AsyncTask<String, Void, String> {
