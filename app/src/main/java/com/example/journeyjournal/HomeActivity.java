@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -43,15 +44,21 @@ public class HomeActivity extends BaseActivity {
 
         fullname = findViewById(R.id.fullname);
         listView = findViewById(R.id.listview);
-        GetJournals();
+
+
+//        GetJournals();
+        new GetAlljournal().execute();
         new GetCurrentUser().execute();
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        GetJournals();
+//        GetJournals();
+        new GetAlljournal().execute();
     }
+
 
     public void GetJournals(){
         ArrayList<JournalInfo> list = new ArrayList<>();
@@ -111,6 +118,77 @@ public class HomeActivity extends BaseActivity {
                 }
             }
         });
+    }
+
+    public void addNewJournalButtonClick(View view) {
+        Log.i("AAAA", "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAa");
+        Intent intent = new Intent(HomeActivity.this, NewJournalActivity.class);
+        startActivity(intent);
+    }
+
+    public class GetAlljournal extends AsyncTask<String, Void, String>{
+
+        @Override
+        protected String doInBackground(String... strings) {
+            ArrayList<JournalInfo> list = new ArrayList<>();
+            sharedPreferences = getSharedPreferences("JourneyJournal", Context.MODE_PRIVATE);
+            String access_token = sharedPreferences.getString("access_token", "");
+            OkHttpClient okHttpClient = new OkHttpClient();
+            Request request = new Request.Builder()
+                    .url(journal_url)
+                    .addHeader("Authorization", "Bearer " + access_token)
+                    .build();
+            okHttpClient.newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    e.printStackTrace();
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    if (response.isSuccessful()) {
+                        String myResponse = response.body().string();
+                        HomeActivity.this.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    JSONObject resultJson = new JSONObject(myResponse);
+                                    JSONArray journals = resultJson.getJSONArray("results");
+                                    String count = resultJson.getString("count");
+                                    Log.i("COUNT", count);
+
+                                    int countOfResult = journals.length();
+                                    Log.i("countOfResult", String.valueOf(countOfResult));
+                                    for (int i = 0; i < journals.length(); i++) {
+                                        JournalInfo info = new JournalInfo();
+                                        JSONObject journal = journals.getJSONObject(i);
+
+                                        Log.i("HELLO", String.valueOf(journal));
+
+
+                                        info.id = journal.getInt("id");
+                                        info.title = journal.getString("title");
+                                        info.description = journal.getString("description");
+                                        info.created_at = journal.getString("created_at");
+                                        info.photo = journal.getString("photo");
+
+                                        list.add(info);
+
+                                    }
+                                    Log.i("LIST", String.valueOf(list));
+                                    adapter = new JournalListAdapter(HomeActivity.this, list);
+                                    listView.setAdapter(adapter);
+
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+                    }
+                }
+            });
+            return null;
+        }
     }
 
     public class GetCurrentUser extends AsyncTask<String, Void, String> {

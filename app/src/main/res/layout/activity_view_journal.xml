@@ -78,7 +78,8 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="0.5"
                         android:layout_marginRight="10dp"
-                        android:text="DELETE" />
+                        android:text="DELETE"
+                        android:onClick="deleteButtonClick"/>
 
                     <Button
                         android:id="@+id/edit"
