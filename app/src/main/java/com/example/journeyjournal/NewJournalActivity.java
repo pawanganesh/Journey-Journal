@@ -3,6 +3,7 @@ package com.example.journeyjournal;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,10 +12,13 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.github.dhaval2404.imagepicker.ImagePicker;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.material.textfield.TextInputLayout;
 
 import org.json.JSONObject;
@@ -34,8 +38,11 @@ public class NewJournalActivity extends AppCompatActivity {
 
     ImageView image;
     TextInputLayout title, description;
+    Button select_location;
     String lat, lon;
     Uri uri;
+
+    private static final int ERROR_DIALOG_REQUEST = 9001;
 
     SharedPreferences sharedPreferences;
 
@@ -51,6 +58,10 @@ public class NewJournalActivity extends AppCompatActivity {
         description = findViewById(R.id.description);
         lat = "85.0202";
         lon = "75.0202";
+
+        if (isServiceOk()) {
+            init();
+        }
 
 
     }
@@ -99,7 +110,6 @@ public class NewJournalActivity extends AppCompatActivity {
             final MediaType MEDIA_TYPE = MediaType.parse("image/*");
 
 
-
             OkHttpClient okHttpClient = new OkHttpClient();
             MultipartBody formBody = new MultipartBody.Builder()
                     .setType(MultipartBody.FORM)
@@ -117,10 +127,10 @@ public class NewJournalActivity extends AppCompatActivity {
                     .build();
             Response response = null;
 
-            try{
+            try {
                 response = okHttpClient.newCall(request).execute();
                 Log.i("ERRORRRR", String.valueOf(response));
-                if (response.code() == 201){
+                if (response.code() == 201) {
                     // parse response to json
                     String result = response.body().string();
                     JSONObject resultJson = new JSONObject(result);
@@ -133,7 +143,7 @@ public class NewJournalActivity extends AppCompatActivity {
                     Intent intent = new Intent(NewJournalActivity.this, HomeActivity.class);
                     startActivity(intent);
                     finish();
-                }else{
+                } else {
                     NewJournalActivity.this.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -141,7 +151,7 @@ public class NewJournalActivity extends AppCompatActivity {
                         }
                     });
                 }
-            }catch (Exception e){
+            } catch (Exception e) {
                 // Display error message maybe Internal server error or Something went wrong
                 NewJournalActivity.this.runOnUiThread(new Runnable() {
                     @Override
@@ -153,5 +163,39 @@ public class NewJournalActivity extends AppCompatActivity {
             }
             return null;
         }
+    }
+
+    private void init() {
+        select_location = findViewById(R.id.select_location);
+
+        select_location.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(NewJournalActivity.this, MapActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    public boolean isServiceOk() {
+        Log.d("isServiceOk", "Checking google services version");
+
+        int available = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(NewJournalActivity.this);
+
+        if (available == ConnectionResult.SUCCESS) {
+            // verything is fine and user can make map requests
+            Log.d("isServiceOk", "Google Play services is working");
+            return true;
+
+        } else if (GoogleApiAvailability.getInstance().isUserResolvableError(available)) {
+            // an error occurred but wen resolve it
+            Log.d("isServiceOk", "");
+            Dialog dialog = GoogleApiAvailability.getInstance().getErrorDialog(NewJournalActivity.this, available, ERROR_DIALOG_REQUEST);
+            dialog.show();
+
+        } else {
+            Toast.makeText(this, "You cannot make ", Toast.LENGTH_SHORT).show();
+        }
+        return false;
     }
 }

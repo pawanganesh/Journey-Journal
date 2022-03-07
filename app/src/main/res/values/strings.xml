@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Journey Journal</string>
+    <string name="google_map_api_key">AIzaSyDe2cHpjIn3LCV70Sb35tiQdq2Fm3DmE8c</string>
 </resources>
