@@ -93,6 +93,7 @@
         android:layout_marginBottom="5dp"
         android:background="@color/background"
         android:text="ADD JOURNAL"
-        android:textColor="@color/white" />
+        android:textColor="@color/white"
+        android:onClick="addNewJournalClick"/>
 
 </LinearLayout>
