@@ -53,7 +53,8 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="10dp"
                     android:text="Loading..."
-                    android:textColor="@color/white" />
+                    android:textColor="@color/white"
+                    android:onClick="placeNameClick"/>
 
                 <ImageView
                     android:id="@+id/photo"

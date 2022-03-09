@@ -30,6 +30,7 @@ public class ViewJournalActivity extends BaseActivity {
     String journal_url;
     String delete_journal_url;
     SharedPreferences sharedPreferences;
+    String latitude, longitude, name_place_;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +79,14 @@ public class ViewJournalActivity extends BaseActivity {
         dialog.show();
     }
 
+    public void placeNameClick(View view) {
+        Intent intent = new Intent(ViewJournalActivity.this, ViewJournalLocationActivity.class);
+        intent.putExtra("latitude", latitude);
+        intent.putExtra("longitude", longitude);
+        intent.putExtra("place_name", name_place_);
+        startActivity(intent);
+    }
+
     public class GetJournal extends AsyncTask<String, Void, String> {
 
         @Override
@@ -100,6 +109,10 @@ public class ViewJournalActivity extends BaseActivity {
                     String description_ = resultJson.getString("description");
                     String created_at_ = resultJson.getString("created_at");
                     String name_place = resultJson.getString("place_name");
+                    latitude = resultJson.getString("lat");
+                    longitude = resultJson.getString("long");
+                    name_place_ = name_place;
+
                     ViewJournalActivity.this.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
