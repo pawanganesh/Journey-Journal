@@ -24,7 +24,7 @@ import okhttp3.Response;
 
 public class ViewJournalActivity extends BaseActivity {
 
-    TextView title, description, posted_on;
+    TextView title, description, posted_on, place_name;
     int id;
     ImageView photo;
     String journal_url;
@@ -40,6 +40,7 @@ public class ViewJournalActivity extends BaseActivity {
         posted_on = findViewById(R.id.posted_on);
         description = findViewById(R.id.description);
         photo = findViewById(R.id.photo);
+        place_name = findViewById(R.id.place_name);
 
         sharedPreferences = getSharedPreferences("JourneyJournal", Context.MODE_PRIVATE);
         id = getIntent().getIntExtra("id", 0);
@@ -98,12 +99,14 @@ public class ViewJournalActivity extends BaseActivity {
                     String photo_ = resultJson.getString("photo");
                     String description_ = resultJson.getString("description");
                     String created_at_ = resultJson.getString("created_at");
+                    String name_place = resultJson.getString("place_name");
                     ViewJournalActivity.this.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             title.setText(title_);
                             posted_on.setText(created_at_);
                             description.setText(description_);
+                            place_name.setText(name_place);
                             Glide.with(getApplicationContext())
                                     .load(photo_)
                                     .into(photo);

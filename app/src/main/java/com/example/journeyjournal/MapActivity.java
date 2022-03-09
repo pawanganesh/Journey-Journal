@@ -7,12 +7,15 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -31,29 +34,6 @@ import java.io.IOException;
 import java.util.List;
 
 public class MapActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMarkerDragListener {
-
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        Toast.makeText(this, "Map is Ready", Toast.LENGTH_SHORT).show();
-        Log.d(TAG, "onMapReady: map is ready");
-        mMap = googleMap;
-
-        if (mLocationPermissionsGranted) {
-            getDeviceLocation();
-
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-                    != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this,
-                    Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                return;
-            }
-            mMap.setMyLocationEnabled(true);
-//            mMap.getUiSettings().setMyLocationButtonEnabled(false);
-        }
-
-        mMap.setOnMarkerDragListener(this);
-
-    }
-
     private static final String TAG = "MapActivity";
 
     private static final String FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
@@ -67,6 +47,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     private FusedLocationProviderClient mFusedLocationProviderClient;
     private Geocoder geocoder;
 
+    double lat;
+    double lon;
+    String place_name;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -91,6 +74,21 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                         if (task.isSuccessful()) {
                             Log.d(TAG, "onComplete: found location!");
                             Location currentLocation = (Location) task.getResult();
+
+                            lat = currentLocation.getLatitude();
+                            lon = currentLocation.getLongitude();
+                            List<Address> addresses = null;
+                            try {
+                                addresses = geocoder.getFromLocation(currentLocation.getLatitude(), currentLocation.getLongitude(), 1);
+                                if (addresses.size() > 0) {
+                                    Address address = addresses.get(0);
+                                    String streetAddress = address.getAddressLine(0);
+                                    place_name = streetAddress;
+                                }
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+
 
                             moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()),
                                     DEFAULT_ZOOM, "My location");
@@ -174,6 +172,28 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         }
     }
 
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        Toast.makeText(this, "Map is Ready", Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "onMapReady: map is ready");
+        mMap = googleMap;
+
+        if (mLocationPermissionsGranted) {
+            getDeviceLocation();
+
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                    != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this,
+                    Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                return;
+            }
+            mMap.setMyLocationEnabled(true);
+//            mMap.getUiSettings().setMyLocationButtonEnabled(false);
+        }
+
+        mMap.setOnMarkerDragListener(this);
+
+    }
+
 
     @Override
     public void onMarkerDragStart(Marker marker) {
@@ -193,14 +213,30 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         LatLng latLng = marker.getPosition();
         Log.d(TAG, "onMarkerDragEnd => lat: " + latLng.latitude + ", lng: " + latLng.longitude);
         try {
+            lat = latLng.latitude;
+            lon = latLng.longitude;
             List<Address> addresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1);
             if (addresses.size() > 0) {
                 Address address = addresses.get(0);
+                Log.i("ADDRESS", String.valueOf(address));
                 String streetAddress = address.getAddressLine(0);
+                place_name = streetAddress;
                 marker.setTitle(streetAddress);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+    public void selectLocationFromMapClick(View view) {
+        Intent returnIntent = new Intent();
+        returnIntent.putExtra("lat", String.valueOf(lat));
+        returnIntent.putExtra("lon", String.valueOf(lon));
+        returnIntent.putExtra("place_name", place_name);
+        Log.i("HELLOWORLD_LAT", String.valueOf(lat));
+        Log.i("HELLOWORLD_LON", String.valueOf(lon));
+        setResult(RESULT_OK, returnIntent);
+        finish();
+    }
+
 }

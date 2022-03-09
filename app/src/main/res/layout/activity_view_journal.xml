@@ -40,10 +40,19 @@
                     android:id="@+id/posted_on"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/fullname"
                     android:layout_gravity="center"
                     android:layout_marginTop="10dp"
                     android:text="Posted on: Loading..."
+                    android:textColor="@color/white" />
+
+                <TextView
+                    android:id="@+id/place_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/location"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:text="Loading..."
                     android:textColor="@color/white" />
 
                 <ImageView
