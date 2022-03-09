@@ -18,6 +18,9 @@
         android:theme="@style/Theme.JourneyJournal"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".EditJournalActivity"
+            android:exported="false" />
+        <activity
             android:name=".ViewJournalLocationActivity"
             android:exported="false" />
 

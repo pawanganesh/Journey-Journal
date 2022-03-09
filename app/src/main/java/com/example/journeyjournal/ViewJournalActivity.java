@@ -87,6 +87,12 @@ public class ViewJournalActivity extends BaseActivity {
         startActivity(intent);
     }
 
+    public void editButtonClick(View view) {
+        Intent intent = new Intent(ViewJournalActivity.this, EditJournalActivity.class);
+        intent.putExtra("id", id);
+        startActivity(intent);
+    }
+
     public class GetJournal extends AsyncTask<String, Void, String> {
 
         @Override

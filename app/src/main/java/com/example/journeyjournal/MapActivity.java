@@ -32,7 +32,7 @@ import com.google.android.gms.tasks.Task;
 import java.io.IOException;
 import java.util.List;
 
-public class MapActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMarkerDragListener {
+public class MapActivity extends BaseActivity implements OnMapReadyCallback, GoogleMap.OnMarkerDragListener {
     private static final String TAG = "MapActivity";
 
     private static final String FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;

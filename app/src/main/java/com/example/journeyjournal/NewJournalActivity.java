@@ -1,7 +1,6 @@
 package com.example.journeyjournal;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -26,8 +25,6 @@ import org.json.JSONObject;
 
 import java.io.File;
 
-import okhttp3.FormBody;
-import okhttp3.Headers;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
@@ -35,7 +32,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class NewJournalActivity extends AppCompatActivity {
+public class NewJournalActivity extends BaseActivity {
 
     ImageView image;
     TextInputLayout title, description, location;
@@ -78,9 +75,9 @@ public class NewJournalActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == REQUEST_CODE_MAP){
+        if (requestCode == REQUEST_CODE_MAP) {
             Log.i("RESULTCODE", "I am inside result code");
-            if( resultCode == Activity.RESULT_OK){
+            if (resultCode == Activity.RESULT_OK) {
                 Log.i("RESULTCODE", "I am inside result Ok");
 
                 lat = (String) data.getStringExtra("lat");
@@ -91,7 +88,7 @@ public class NewJournalActivity extends AppCompatActivity {
                 Log.i("DATA_longitude", lon);
                 Log.i("DATA_place_name", place_name);
             }
-        }else{
+        } else {
             uri = data.getData();
             Log.i("URI", String.valueOf(uri));
             image.setImageURI(uri);
@@ -99,7 +96,7 @@ public class NewJournalActivity extends AppCompatActivity {
         }
     }
 
-    public void addNewJournalClick(View view) {
+    public void JournalSubmitClick(View view) {
         String title_ = title.getEditText().getText().toString();
         String description_ = description.getEditText().getText().toString();
         String place_name_ = location.getEditText().getText().toString();

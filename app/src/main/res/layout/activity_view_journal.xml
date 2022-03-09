@@ -97,7 +97,8 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="0.5"
                         android:layout_marginLeft="10dp"
-                        android:text="EDIT" />
+                        android:text="EDIT"
+                        android:onClick="editButtonClick"/>
                 </LinearLayout>
 
             </LinearLayout>
