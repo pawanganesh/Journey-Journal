@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -10,118 +10,122 @@
     android:padding="20dp"
     tools:context=".NewJournalActivity">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/screen_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:fontFamily="@font/baloo"
-            android:text="Add new Journal"
-            android:textSize="28sp" />
-
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="0dp" >
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/image"
+            <TextView
+                android:id="@+id/screen_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/baloo"
+                android:text="Add new Journal"
+                android:textSize="28sp" />
+
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:scaleType="centerCrop"
-                android:src="@mipmap/mountain" />
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="0dp">
 
-            <ImageView
-                android:id="@+id/image_selector"
-                android:layout_width="85dp"
-                android:layout_height="75dp"
-                android:layout_alignBottom="@+id/image"
-                android:layout_alignParentEnd="true"
-                android:layout_centerInParent="true"
-                android:onClick="selectImageClick"
-                android:src="@drawable/image" />
+                <ImageView
+                    android:id="@+id/image"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/mountain" />
 
-        </RelativeLayout>
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/title"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Title">
+                <ImageView
+                    android:id="@+id/image_selector"
+                    android:layout_width="85dp"
+                    android:layout_height="75dp"
+                    android:layout_alignBottom="@+id/image"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerInParent="true"
+                    android:onClick="selectImageClick"
+                    android:src="@drawable/image" />
 
-            <com.google.android.material.textfield.TextInputEditText
+            </RelativeLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/title"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text" />
+                android:hint="Title">
 
-        </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text" />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/description"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Description">
-
-            <com.google.android.material.textfield.TextInputEditText
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/description"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fadeScrollbars="false"
-                android:gravity="top|left"
-                android:inputType="textMultiLine|textNoSuggestions"
-                android:lines="5"
-                android:scrollbars="vertical" />
+                android:hint="Description">
 
-        </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fadeScrollbars="false"
+                    android:gravity="top|left"
+                    android:inputType="textMultiLine|textNoSuggestions"
+                    android:lines="5"
+                    android:scrollbars="vertical" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/select_location"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:backgroundTint="@color/white"
+                android:text="Click here to select location >>"
+                android:textAllCaps="false"
+                android:textColor="@color/blue" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/location"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Selected location">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:editable="false"
+                    android:gravity="top|left"
+                    android:inputType="textMultiLine|textNoSuggestions"
+                    android:lines="2"
+                    tools:ignore="Deprecated" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
 
         <Button
-            android:id="@+id/select_location"
+            android:id="@+id/submit_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
-            android:background="@color/white"
-            android:text="Select location"
-            android:textColor="@color/black" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/location"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Selected location">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:editable="false"
-                android:inputType="textMultiLine|textNoSuggestions"
-                android:lines="2"
-                android:gravity="top|left"
-                tools:ignore="Deprecated" />
-
-        </com.google.android.material.textfield.TextInputLayout>
+            android:background="@color/background"
+            android:onClick="JournalSubmitClick"
+            android:text="ADD JOURNAL"
+            android:textColor="@color/white" />
     </LinearLayout>
-    </ScrollView>
-
-    <Button
-        android:id="@+id/submit_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
-        android:background="@color/background"
-        android:text="ADD JOURNAL"
-        android:textColor="@color/white"
-        android:onClick="JournalSubmitClick"/>
-
-</LinearLayout>
+</ScrollView>

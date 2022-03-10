@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,89 +9,141 @@
     android:padding="20dp"
     tools:context=".LoginActivity">
 
-    <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_gravity="center"
-        android:src="@mipmap/logo" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:fontFamily="@font/baloo"
-        android:text="Welcome to Journey Journal"
-        android:textSize="28sp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="Login to continue"
-        android:textSize="20sp" />
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
-        // Email
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:src="@mipmap/logo" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/login_email"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/baloo"
+            android:text="Welcome to Journey Journal"
+            android:textSize="28sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Login to continue"
+            android:textSize="20sp" />
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Email">
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:orientation="vertical">
 
-            <com.google.android.material.textfield.TextInputEditText
+            // Email
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/login_email"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textEmailAddress" />
+                android:hint="Email">
 
-        </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textEmailAddress" />
 
-        // Password
+            </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/login_password"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            // Password
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/login_password"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Password"
+                app:passwordToggleEnabled="true"
+                app:passwordToggleTint="@color/background">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+
+        // Forgot Password Button
+
+        // Login Button
+
+        <Button
+            android:id="@+id/login_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Password"
-            app:passwordToggleEnabled="true"
-            app:passwordToggleTint="@color/background">
+            android:layout_marginBottom="5dp"
+            android:background="@color/background"
+            android:text="LOGIN"
+            android:textColor="@color/white" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPassword" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="5dp"
+            android:text="OR" />
 
-        </com.google.android.material.textfield.TextInputLayout>
+        // Register with Facebook Button
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:background="@color/background"
+            android:onClick="socialoginClick"
+            android:text="LOGIN WITH FACEBOOK"
+            android:textColor="@color/white"
+            app:backgroundTint="#3b5998"
+            app:icon="@drawable/facebook" />
+
+        // Register with Google Button
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:backgroundTint="@color/white"
+            android:onClick="socialoginClick"
+            android:text="LOGIN WITH GOOGLE"
+            android:textColor="@color/black"
+            app:icon="@drawable/google"
+            app:iconTintMode="multiply" />
+
+        // Register with Linkedin Button
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:backgroundTint="@color/linkdein"
+            android:onClick="socialoginClick"
+            android:text="LOGIN WITH LINKEDIN"
+            android:textColor="@color/white"
+            app:icon="@drawable/linkedin"
+            app:iconTintMode="multiply" />
+
+        // SignUp Button
+
+        <Button
+            android:id="@+id/signup_button"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
+            android:textAllCaps="false" />
     </LinearLayout>
-
-    // Forgot Password Button
-
-    // Login Button
-
-    <Button
-        android:id="@+id/login_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
-        android:background="@color/background"
-        android:text="LOGIN"
-        android:textColor="@color/white" />
-
-    // SignUp Button
-
-    <Button
-        android:id="@+id/signup_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/btnWhiteStyle"
-        android:elevation="5dp"
-        android:text="SIGNUP" />
-</LinearLayout>
+</ScrollView>

@@ -7,8 +7,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Patterns;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputLayout;
@@ -24,6 +26,7 @@ import okhttp3.Response;
 public class SignupActivity extends AppCompatActivity {
 
     TextInputLayout fullname, email, password;
+    Button login_button;
 
     SharedPreferences sharedPreferences;
 
@@ -37,6 +40,11 @@ public class SignupActivity extends AppCompatActivity {
         fullname = findViewById(R.id.signup_fullname);
         email = findViewById(R.id.signup_email);
         password = findViewById(R.id.signup_password);
+        login_button = findViewById(R.id.login_button);
+
+        String blackString = "<font color='#000000'>Already have an account? </font>";
+        String blueString = "<font color='#0000FF'>Login</font>";
+        login_button.setText(Html.fromHtml(blackString + blueString));
 
         sharedPreferences = getSharedPreferences("JourneyJournal", Context.MODE_PRIVATE);
     }
@@ -86,6 +94,10 @@ public class SignupActivity extends AppCompatActivity {
         } else {
             return false;
         }
+    }
+
+    public void socialRegisterClick(View view) {
+        Toast.makeText(this, "Thanks for your patience. Coming soon.", Toast.LENGTH_SHORT).show();
     }
 
     public class RegisterUser extends AsyncTask<String, Void, String> {
