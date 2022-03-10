@@ -39,7 +39,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
             android:orientation="vertical">
 
             // Email
@@ -78,6 +77,17 @@
         </LinearLayout>
 
         // Forgot Password Button
+        <Button
+            android:id="@+id/forgot_paword"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
+            android:layout_gravity="right"
+            android:text="Forgot password?"
+            android:textColor="@color/black"
+            android:textAllCaps="false"
+            android:onClick="forgotPasswordClick"/>
 
         // Login Button
 

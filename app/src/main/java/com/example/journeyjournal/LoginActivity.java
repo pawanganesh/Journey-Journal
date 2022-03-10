@@ -90,6 +90,10 @@ public class LoginActivity extends AppCompatActivity {
         Toast.makeText(this, "Thanks for your patience. Coming soon.", Toast.LENGTH_SHORT).show();
     }
 
+    public void forgotPasswordClick(View view) {
+        Toast.makeText(this, "Thanks for your patience. Coming soon.", Toast.LENGTH_SHORT).show();
+    }
+
     public class LoginUser extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... strings) {
