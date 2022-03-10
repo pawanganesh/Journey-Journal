@@ -39,6 +39,7 @@ public class NewJournalActivity extends BaseActivity {
     Button select_location;
     String lat, lon, place_name;
     Uri uri;
+    Boolean imageSelected = false;
     private static final int REQUEST_CODE_MAP = 101;
 
     private static final int ERROR_DIALOG_REQUEST = 9001;
@@ -82,9 +83,11 @@ public class NewJournalActivity extends BaseActivity {
                 place_name = data.getStringExtra("place_name");
                 location.getEditText().setText(place_name);
             }
-        } else {
+        } else if (resultCode == Activity.RESULT_OK) {
             uri = data.getData();
+            imageSelected = true;
             image.setImageURI(uri);
+
         }
     }
 
@@ -94,8 +97,30 @@ public class NewJournalActivity extends BaseActivity {
         String place_name_ = location.getEditText().getText().toString();
         String photo_ = image.toString();
 
-        
-        new AddJournal().execute(title_, description_, photo_, lat, lon, place_name_);
+        if (!title_.isEmpty()) {
+            title.setError(null);
+            title.setErrorEnabled(false);
+            if (!description_.isEmpty()) {
+                description.setError(null);
+                description.setErrorEnabled(false);
+                if (!place_name_.isEmpty()) {
+                    location.setError(null);
+                    location.setErrorEnabled(false);
+                    if (image.getDrawable() != null && imageSelected) {
+                        // Add new journal logic here
+                        new AddJournal().execute(title_, description_, photo_, lat, lon, place_name_);
+                    } else {
+                        Toast.makeText(this, "Please select image", Toast.LENGTH_LONG).show();
+                    }
+                } else {
+                    location.setError("Please select location");
+                }
+            } else {
+                description.setError("Please enter description");
+            }
+        } else {
+            title.setError("Please enter title");
+        }
     }
 
     public class AddJournal extends AsyncTask<String, Void, String> {
