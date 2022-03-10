@@ -1,7 +1,6 @@
 package com.example.journeyjournal;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -100,9 +99,7 @@ public class EditJournalActivity extends BaseActivity {
         String description_ = description.getEditText().getText().toString();
         String place_name_ = location.getEditText().getText().toString();
 
-        Log.i("LATTT", lat);
-        Log.i("place_name_", place_name_);
-
+        // EditJournal call
         new EditJournal().execute(title_, description_, lat, lon, place_name_);
 
     }
@@ -119,18 +116,12 @@ public class EditJournalActivity extends BaseActivity {
             sharedPreferences = getSharedPreferences("JourneyJournal", Context.MODE_PRIVATE);
             String access_token = sharedPreferences.getString("access_token", "");
 
-            Log.i("TITLE", title);
-            Log.i("DESCRIPTION", description);
-            Log.i("LAT", lat_);
-            Log.i("LON", lon_);
-            Log.i("NAME_PLACE", name_place);
-
             OkHttpClient okHttpClient = new OkHttpClient();
             RequestBody formBody = new FormBody.Builder()
                     .add("title", title)
                     .add("description", description)
-                    .add("lat", lat)
-                    .add("long", lon)
+                    .add("lat", lat_)
+                    .add("long", lon_)
                     .add("place_name", name_place)
                     .build();
 
@@ -188,7 +179,6 @@ public class EditJournalActivity extends BaseActivity {
             String photo = strings[0];
             sharedPreferences = getSharedPreferences("JourneyJournal", Context.MODE_PRIVATE);
             String access_token = sharedPreferences.getString("access_token", "");
-            Log.i("PHOTO", photo);
 
             File file = new File(uri.getPath());
             final MediaType MEDIA_TYPE = MediaType.parse("image/*");
@@ -284,7 +274,6 @@ public class EditJournalActivity extends BaseActivity {
                     Log.i("ERROR", "ERROR");
                 }
             } catch (Exception e) {
-                Log.i("EXCEPTION", "EXCEPTION");
                 e.printStackTrace();
             }
             return null;
@@ -292,23 +281,19 @@ public class EditJournalActivity extends BaseActivity {
     }
 
     public boolean isServiceOk() {
-        Log.d("isServiceOk", "Checking google services version");
-
         int available = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(EditJournalActivity.this);
 
         if (available == ConnectionResult.SUCCESS) {
-            // verything is fine and user can make map requests
-            Log.d("isServiceOk", "Google Play services is working");
+            // everything is fine and user can make map requests
             return true;
 
         } else if (GoogleApiAvailability.getInstance().isUserResolvableError(available)) {
-            // an error occurred but wen resolve it
-            Log.d("isServiceOk", "");
+            // an error occurred but we can resolve it
             Dialog dialog = GoogleApiAvailability.getInstance().getErrorDialog(EditJournalActivity.this, available, ERROR_DIALOG_REQUEST);
             dialog.show();
 
         } else {
-            Toast.makeText(this, "You cannot make ", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "You cannot make request", Toast.LENGTH_SHORT).show();
         }
         return false;
     }
@@ -325,24 +310,15 @@ public class EditJournalActivity extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == REQUEST_CODE_MAP) {
-            Log.i("RESULTCODE", "I am inside result code");
             if (resultCode == Activity.RESULT_OK) {
-                Log.i("RESULTCODE", "I am inside result Ok");
-
                 lat = (String) data.getStringExtra("lat");
                 lon = (String) data.getStringExtra("lon");
                 place_name = data.getStringExtra("place_name");
                 location.getEditText().setText(place_name);
-                Log.i("DATA_latitude", lat);
-                Log.i("DATA_longitude", lon);
-                Log.i("DATA_place_name", place_name);
             }
-        }else if (resultCode == Activity.RESULT_OK) {
+        } else if (resultCode == Activity.RESULT_OK) {
             uri = data.getData();
-            Log.i("URI", String.valueOf(uri));
-            Log.i("URIII", "URRRRRRRRIIIIIIIIIIIIIIIIIIIIIIII");
             image.setImageURI(uri);
-            Log.i("IMAGE", String.valueOf(image));
             String photo_ = image.toString();
             new UpdateJournalImage().execute(photo_);
         }

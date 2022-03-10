@@ -8,8 +8,7 @@
     android:orientation="vertical"
     tools:context=".MapActivity">
 
-    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <fragment
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"

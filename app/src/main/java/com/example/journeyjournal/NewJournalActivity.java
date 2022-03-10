@@ -76,23 +76,15 @@ public class NewJournalActivity extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == REQUEST_CODE_MAP) {
-            Log.i("RESULTCODE", "I am inside result code");
             if (resultCode == Activity.RESULT_OK) {
-                Log.i("RESULTCODE", "I am inside result Ok");
-
                 lat = (String) data.getStringExtra("lat");
                 lon = (String) data.getStringExtra("lon");
                 place_name = data.getStringExtra("place_name");
                 location.getEditText().setText(place_name);
-                Log.i("DATA_latitude", lat);
-                Log.i("DATA_longitude", lon);
-                Log.i("DATA_place_name", place_name);
             }
         } else {
             uri = data.getData();
-            Log.i("URI", String.valueOf(uri));
             image.setImageURI(uri);
-            Log.i("IMAGE", String.valueOf(image));
         }
     }
 
@@ -102,11 +94,8 @@ public class NewJournalActivity extends BaseActivity {
         String place_name_ = location.getEditText().getText().toString();
         String photo_ = image.toString();
 
-        Log.i("LATTT", lat);
-        Log.i("place_name_", place_name_);
-
+        
         new AddJournal().execute(title_, description_, photo_, lat, lon, place_name_);
-
     }
 
     public class AddJournal extends AsyncTask<String, Void, String> {
@@ -121,8 +110,6 @@ public class NewJournalActivity extends BaseActivity {
             String name_place = strings[5];
             sharedPreferences = getSharedPreferences("JourneyJournal", Context.MODE_PRIVATE);
             String access_token = sharedPreferences.getString("access_token", "");
-            Log.i("PHOTO", photo);
-            Log.i("NAME_PLACE", name_place);
 
             File file = new File(uri.getPath());
             final MediaType MEDIA_TYPE = MediaType.parse("image/*");
@@ -197,23 +184,21 @@ public class NewJournalActivity extends BaseActivity {
     }
 
     public boolean isServiceOk() {
-        Log.d("isServiceOk", "Checking google services version");
 
         int available = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(NewJournalActivity.this);
 
         if (available == ConnectionResult.SUCCESS) {
-            // verything is fine and user can make map requests
-            Log.d("isServiceOk", "Google Play services is working");
+            // everything is fine and user can make map requests
             return true;
 
         } else if (GoogleApiAvailability.getInstance().isUserResolvableError(available)) {
-            // an error occurred but wen resolve it
+            // an error occurred but we can resolve it
             Log.d("isServiceOk", "");
             Dialog dialog = GoogleApiAvailability.getInstance().getErrorDialog(NewJournalActivity.this, available, ERROR_DIALOG_REQUEST);
             dialog.show();
 
         } else {
-            Toast.makeText(this, "You cannot make ", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "You cannot make map request", Toast.LENGTH_SHORT).show();
         }
         return false;
     }

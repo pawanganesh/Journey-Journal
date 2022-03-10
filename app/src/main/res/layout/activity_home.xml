@@ -17,8 +17,16 @@
         android:text="Loading..."
         android:textColor="@color/black"
         android:textSize="15dp"
-        android:textStyle="bold"
-        />
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/empty"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:src="@mipmap/add" />
 
     <ListView
         android:id="@+id/listview"
@@ -32,10 +40,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:background="@color/background"
+        android:onClick="addNewJournalButtonClick"
         android:text="Add New Journal"
         android:textColor="@color/white"
-        app:icon="@drawable/plus"
-        android:onClick="addNewJournalButtonClick"/>
-
-
+        app:icon="@drawable/plus" />
+    
 </LinearLayout>

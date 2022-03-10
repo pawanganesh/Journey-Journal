@@ -19,7 +19,8 @@
         android:usesCleartextTraffic="true">
         <activity
             android:name=".EditJournalActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".ViewJournalActivity"/>
         <activity
             android:name=".ViewJournalLocationActivity"
             android:exported="false" />
@@ -36,16 +37,19 @@
             android:exported="false" />
         <activity
             android:name=".NewJournalActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".HomeActivity"/>
         <activity
             android:name=".BaseActivity"
             android:exported="false" />
         <activity
             android:name=".ViewJournalActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".HomeActivity"/>
         <activity
             android:name=".MyAccountActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".HomeActivity"/>
         <activity
             android:name=".SignupActivity"
             android:exported="false"

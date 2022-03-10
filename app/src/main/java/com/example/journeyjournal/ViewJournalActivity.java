@@ -46,15 +46,11 @@ public class ViewJournalActivity extends BaseActivity {
         sharedPreferences = getSharedPreferences("JourneyJournal", Context.MODE_PRIVATE);
         id = getIntent().getIntExtra("id", 0);
 
-        Log.i("ID", String.valueOf(id));
-
         journal_url = "https://journeyjournal.pythonanywhere.com/journal/" + id + "/";
         delete_journal_url = "https://journeyjournal.pythonanywhere.com/journal/delete/" + id;
 
-        Log.i("journal_url", journal_url);
-
+        // Get journal
         new GetJournal().execute();
-
     }
 
     @Override
@@ -179,7 +175,6 @@ public class ViewJournalActivity extends BaseActivity {
                     Log.i("ERROR", "ERROR");
                 }
             } catch (Exception e) {
-                Log.i("EXCEPTION", "EXCEPTION");
                 e.printStackTrace();
             }
             return null;

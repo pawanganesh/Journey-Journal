@@ -2,7 +2,6 @@ package com.example.journeyjournal;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,7 +37,6 @@ public class JournalListAdapter extends ArrayAdapter<JournalInfo> {
         title.setText(info.title);
         posted_on.setText((CharSequence) info.created_at);
         Glide.with(context).load(info.photo).into(photo);
-//        photo.setImageURI(Uri.parse(info.photo));
 
         view.setOnClickListener(new View.OnClickListener() {
             @Override

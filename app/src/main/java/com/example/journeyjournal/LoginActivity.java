@@ -43,7 +43,7 @@ public class LoginActivity extends AppCompatActivity {
 
         sharedPreferences = getSharedPreferences("JourneyJournal", Context.MODE_PRIVATE);
 
-        if(sharedPreferences.contains("access_token")){
+        if (sharedPreferences.contains("access_token")) {
             startActivity(new Intent(LoginActivity.this, HomeActivity.class));
             finish();
         }
@@ -60,9 +60,7 @@ public class LoginActivity extends AppCompatActivity {
                     if (!password_.isEmpty()) {
                         password.setError(null);
                         password.setErrorEnabled(false);
-
                         // Login logic here
-
                         new LoginUser().execute(email_, password_);
                     } else {
                         password.setError("Please enter password");

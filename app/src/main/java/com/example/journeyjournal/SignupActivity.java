@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Toast;
@@ -131,13 +130,9 @@ public class SignupActivity extends AppCompatActivity {
                     startActivity(intent);
                     finish();
                 }else{
-//                    String result = response.body().string();
-//                    JSONObject resultJson = new JSONObject(result);
-//                    String email_resp = resultJson.getString("email");
                     SignupActivity.this.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-//                            Toast.makeText(SignupActivity.this, email_resp, Toast.LENGTH_LONG).show();
                             Toast.makeText(SignupActivity.this, "A user with that email already exists", Toast.LENGTH_LONG).show();
                         }
                     });

@@ -1,7 +1,5 @@
 package com.example.journeyjournal;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -62,7 +60,6 @@ public class MyAccountActivity extends BaseActivity {
                     MyAccountActivity.this.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Log.i("CURRENT_USER", fullname_);
                             fullname.setText(fullname_);
                             join_date.setText(join_date_);
                             email.setText(email_);

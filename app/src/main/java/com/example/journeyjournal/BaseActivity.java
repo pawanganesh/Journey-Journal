@@ -34,7 +34,9 @@ public class BaseActivity extends AppCompatActivity {
         int id = item.getItemId();
         switch (id) {
             case R.id.my_account:
-                startActivity(new Intent(BaseActivity.this, MyAccountActivity.class));
+                Intent intent = new Intent(BaseActivity.this, MyAccountActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intent);
                 break;
             case R.id.logout:
                 AlertDialog.Builder dialog = new AlertDialog.Builder(this);

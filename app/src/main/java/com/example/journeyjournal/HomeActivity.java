@@ -7,18 +7,15 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ListAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -29,6 +26,7 @@ import okhttp3.Response;
 public class HomeActivity extends BaseActivity {
 
     TextView fullname;
+    ImageView empty;
     ListView listView;
     JournalListAdapter adapter;
     SharedPreferences sharedPreferences;
@@ -43,10 +41,11 @@ public class HomeActivity extends BaseActivity {
         setContentView(R.layout.activity_home);
 
         fullname = findViewById(R.id.fullname);
+        empty = findViewById(R.id.empty);
         listView = findViewById(R.id.listview);
+        listView.setEmptyView(empty);
 
 
-//        GetJournals();
         new GetAlljournal().execute();
         new GetCurrentUser().execute();
 
@@ -55,78 +54,15 @@ public class HomeActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-//        GetJournals();
         new GetAlljournal().execute();
     }
 
-
-    public void GetJournals(){
-        ArrayList<JournalInfo> list = new ArrayList<>();
-        sharedPreferences = getSharedPreferences("JourneyJournal", Context.MODE_PRIVATE);
-        String access_token = sharedPreferences.getString("access_token", "");
-        OkHttpClient okHttpClient = new OkHttpClient();
-        Request request = new Request.Builder()
-                .url(journal_url)
-                .addHeader("Authorization", "Bearer " + access_token)
-                .build();
-        okHttpClient.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                e.printStackTrace();
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                if (response.isSuccessful()) {
-                    String myResponse = response.body().string();
-                    HomeActivity.this.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                                JSONObject resultJson = new JSONObject(myResponse);
-                                JSONArray journals = resultJson.getJSONArray("results");
-                                String count = resultJson.getString("count");
-                                Log.i("COUNT", count);
-
-                                int countOfResult = journals.length();
-                                Log.i("countOfResult", String.valueOf(countOfResult));
-                                for (int i = 0; i < journals.length(); i++) {
-                                    JournalInfo info = new JournalInfo();
-                                    JSONObject journal = journals.getJSONObject(i);
-
-                                    Log.i("HELLO", String.valueOf(journal));
-
-
-                                    info.id = journal.getInt("id");
-                                    info.title = journal.getString("title");
-                                    info.description = journal.getString("description");
-                                    info.created_at = journal.getString("created_at");
-                                    info.photo = journal.getString("photo");
-
-                                    list.add(info);
-
-                                }
-                                Log.i("LIST", String.valueOf(list));
-                                adapter = new JournalListAdapter(HomeActivity.this, list);
-                                listView.setAdapter(adapter);
-
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    });
-                }
-            }
-        });
-    }
-
     public void addNewJournalButtonClick(View view) {
-        Log.i("AAAA", "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAa");
         Intent intent = new Intent(HomeActivity.this, NewJournalActivity.class);
         startActivity(intent);
     }
 
-    public class GetAlljournal extends AsyncTask<String, Void, String>{
+    public class GetAlljournal extends AsyncTask<String, Void, String> {
 
         @Override
         protected String doInBackground(String... strings) {
@@ -154,17 +90,10 @@ public class HomeActivity extends BaseActivity {
                                 try {
                                     JSONObject resultJson = new JSONObject(myResponse);
                                     JSONArray journals = resultJson.getJSONArray("results");
-                                    String count = resultJson.getString("count");
-                                    Log.i("COUNT", count);
 
-                                    int countOfResult = journals.length();
-                                    Log.i("countOfResult", String.valueOf(countOfResult));
                                     for (int i = 0; i < journals.length(); i++) {
                                         JournalInfo info = new JournalInfo();
                                         JSONObject journal = journals.getJSONObject(i);
-
-                                        Log.i("HELLO", String.valueOf(journal));
-
 
                                         info.id = journal.getInt("id");
                                         info.title = journal.getString("title");
@@ -175,7 +104,6 @@ public class HomeActivity extends BaseActivity {
                                         list.add(info);
 
                                     }
-                                    Log.i("LIST", String.valueOf(list));
                                     adapter = new JournalListAdapter(HomeActivity.this, list);
                                     listView.setAdapter(adapter);
 

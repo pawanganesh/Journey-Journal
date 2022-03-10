@@ -42,7 +42,6 @@
             android:layout_marginBottom="20dp"
             android:orientation="vertical">
 
-            // Full name
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/signup_fullname"
@@ -58,7 +57,6 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            // Email
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/signup_email"
@@ -74,7 +72,6 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            // Password
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/signup_password"

@@ -19,8 +19,6 @@
         android:layout_marginBottom="20dp"
         android:orientation="vertical">
 
-        // Title
-
         <TextView
             android:id="@+id/screen_title"
             android:layout_width="wrap_content"
@@ -68,7 +66,6 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        // Description
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/description"
