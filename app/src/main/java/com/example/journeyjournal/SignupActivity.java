@@ -73,10 +73,14 @@ public class SignupActivity extends AppCompatActivity {
                     password.setError(null);
                     password.setErrorEnabled(false);
 
-                    // Register logic here
-                    
-                    new RegisterUser().execute(fullname_, email_, password_);
+                    if (password_.length() >= 8) {
+                        // Register logic here
 
+                        new RegisterUser().execute(fullname_, email_, password_);
+
+                    } else {
+                        password.setError("Password must have at least 8 characters");
+                    }
                 } else {
                     password.setError("Please enter password");
                 }
@@ -121,9 +125,9 @@ public class SignupActivity extends AppCompatActivity {
                     .build();
             Response response = null;
 
-            try{
+            try {
                 response = okHttpClient.newCall(request).execute();
-                if (response.code() == 200){
+                if (response.code() == 200) {
                     // parse response to json
                     String result = response.body().string();
                     JSONObject resultJson = new JSONObject(result);
@@ -141,7 +145,7 @@ public class SignupActivity extends AppCompatActivity {
                     Intent intent = new Intent(SignupActivity.this, HomeActivity.class);
                     startActivity(intent);
                     finish();
-                }else{
+                } else {
                     SignupActivity.this.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -149,7 +153,7 @@ public class SignupActivity extends AppCompatActivity {
                         }
                     });
                 }
-            }catch (Exception e){
+            } catch (Exception e) {
                 // Display error message maybe Internal server error or Something went wrong
                 SignupActivity.this.runOnUiThread(new Runnable() {
                     @Override
