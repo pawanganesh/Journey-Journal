@@ -21,7 +21,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/purple_700"
+                android:background="@color/card"
                 android:orientation="vertical"
                 android:padding="10dp">
 
@@ -89,6 +89,7 @@
                         android:layout_weight="0.5"
                         android:layout_marginRight="10dp"
                         android:text="DELETE"
+                        app:backgroundTint="@color/red"
                         android:onClick="deleteButtonClick"/>
 
                     <Button

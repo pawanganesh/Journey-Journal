@@ -15,7 +15,10 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -98,8 +101,17 @@ public class HomeActivity extends BaseActivity {
                                         info.id = journal.getInt("id");
                                         info.title = journal.getString("title");
                                         info.description = journal.getString("description");
-                                        info.created_at = journal.getString("created_at");
                                         info.photo = journal.getString("photo");
+
+                                        String date_ = journal.getString("created_at");
+                                        try {
+                                            Date date = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'").parse(date_);
+                                            SimpleDateFormat formatter = new SimpleDateFormat("dd MMMM yyyy hh:mm");
+                                            info.created_at = formatter.format(date);
+
+                                        } catch (ParseException e) {
+                                            e.printStackTrace();
+                                        }
 
                                         list.add(info);
 

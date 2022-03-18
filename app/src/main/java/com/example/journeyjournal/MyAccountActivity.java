@@ -10,6 +10,10 @@ import android.widget.TextView;
 
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -61,8 +65,21 @@ public class MyAccountActivity extends BaseActivity {
                         @Override
                         public void run() {
                             fullname.setText(fullname_);
-                            join_date.setText(join_date_);
                             email.setText(email_);
+
+                            Date date;
+                            String strDate = null;
+                            try {
+                                date = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").parse(join_date_);
+                                SimpleDateFormat formatter = new SimpleDateFormat("dd MMMM yyyy hh:mm");
+                                strDate = formatter.format(date);
+
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+                            join_date.setText(strDate);
+
+
                         }
                     });
                 } else if (response.code() == 403) {

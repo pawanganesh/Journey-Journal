@@ -18,6 +18,10 @@ import com.bumptech.glide.Glide;
 
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -119,12 +123,19 @@ public class ViewJournalActivity extends BaseActivity {
                         @Override
                         public void run() {
                             title.setText(title_);
-                            posted_on.setText(created_at_);
                             description.setText(description_);
                             place_name.setText(name_place);
                             Glide.with(getApplicationContext())
                                     .load(photo_)
                                     .into(photo);
+
+                            try {
+                                Date date = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'").parse(created_at_);
+                                SimpleDateFormat formatter = new SimpleDateFormat("dd MMMM yyyy hh:mm");
+                                posted_on.setText(formatter.format(date));
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
                         }
                     });
                 } else if (response.code() == 403) {
