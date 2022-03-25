@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -118,6 +119,7 @@ public class HomeActivity extends BaseActivity {
                                     }
                                     adapter = new JournalListAdapter(HomeActivity.this, list);
                                     listView.setAdapter(adapter);
+//                                    Toast.makeText(HomeActivity.this, "Journal deleted", Toast.LENGTH_SHORT).show();
 
                                 } catch (Exception e) {
                                     e.printStackTrace();

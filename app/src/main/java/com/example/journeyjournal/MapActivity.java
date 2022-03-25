@@ -68,10 +68,11 @@ public class MapActivity extends BaseActivity implements OnMapReadyCallback, Goo
                         if (task.isSuccessful()) {
                             Location currentLocation = (Location) task.getResult();
 
-                            lat = currentLocation.getLatitude();
-                            lon = currentLocation.getLongitude();
+
                             List<Address> addresses = null;
                             try {
+                                lat = currentLocation.getLatitude();
+                                lon = currentLocation.getLongitude();
                                 addresses = geocoder.getFromLocation(currentLocation.getLatitude(), currentLocation.getLongitude(), 1);
                                 if (addresses.size() > 0) {
                                     Address address = addresses.get(0);

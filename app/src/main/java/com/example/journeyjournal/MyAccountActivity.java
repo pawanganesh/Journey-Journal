@@ -66,20 +66,20 @@ public class MyAccountActivity extends BaseActivity {
                         public void run() {
                             fullname.setText(fullname_);
                             email.setText(email_);
-
-                            Date date;
-                            String strDate = null;
-                            try {
-                                date = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").parse(join_date_);
-                                SimpleDateFormat formatter = new SimpleDateFormat("dd MMMM yyyy hh:mm");
-                                strDate = formatter.format(date);
-
-                            } catch (ParseException e) {
-                                e.printStackTrace();
-                            }
-                            join_date.setText(strDate);
-
-
+                            join_date.setText(join_date_);
+//                            Date date;
+//                            String strDate = null;
+//                            try {
+//                                date = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'").parse(join_date_);
+//                                SimpleDateFormat formatter = new SimpleDateFormat("dd MMMM yyyy HH:mm");
+//                                strDate = formatter.format(date);
+//                                Log.i("ERROR_DATE123", strDate);
+//
+//                            } catch (ParseException e) {
+//                                e.printStackTrace();
+//                            }
+//                            Log.i("ERROR_DATE", strDate);
+//                            join_date.setText(strDate);
                         }
                     });
                 } else if (response.code() == 403) {
